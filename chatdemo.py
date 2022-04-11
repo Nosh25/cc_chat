@@ -87,7 +87,7 @@ class MessageUpdatesHandler(tornado.web.RequestHandler):
             # on_connection_close.
             self.wait_future = global_message_buffer.cond.wait()
             try:
-                await self.wait_future
+                yield from self.wait_future
             except asyncio.CancelledError:
                 return
             messages = global_message_buffer.get_messages_since(cursor)
