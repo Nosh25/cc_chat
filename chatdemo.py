@@ -78,7 +78,8 @@ class MessageUpdatesHandler(tornado.web.RequestHandler):
     Waits until new messages are available before returning anything.
     """
 
-    async def post(self):
+    @asyncio.coroutine
+    def post(self):
         cursor = self.get_argument("cursor", None)
         messages = global_message_buffer.get_messages_since(cursor)
         while not messages:
